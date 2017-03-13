@@ -15,5 +15,13 @@ app = Flask(__name__)
 app.register_blueprint(api_v0, url_prefix=_get_url_prefix())
 
 
-if __name__ == '__main__':
+def main():
     app.run(host=settings.host, port=settings.port, debug=settings.debug)
+
+
+def gunicorn():
+    return app
+
+
+if __name__ == '__main__':
+    main()
