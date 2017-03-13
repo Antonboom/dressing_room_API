@@ -16,4 +16,4 @@ app.register_blueprint(api_v0, url_prefix=_get_url_prefix())
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host=settings.host, port=settings.port, debug=settings.debug)
