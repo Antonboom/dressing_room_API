@@ -18,5 +18,6 @@ gunicorn 'main:gunicorn()' -c conf/gunicorn.conf.py
 
 #### Run in production
 ```bash
-sudo supervisorctl start droom_api
+sudo supervisorctl reload
+sudo supervisorctl restart droom_api
 ```

@@ -74,3 +74,4 @@ ENV/
 logs/
 *.log
 local_settings.py
+configs
