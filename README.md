@@ -1,4 +1,4 @@
-## [Dressing room](http://mydressing.ru)
+## [Dressing room API](http://mydressing.ru)
 
 #### Python 3.4.4
 
@@ -7,11 +7,16 @@ Debug mode settings in
 local_settings.py
 ```
 
-Run locally:
+#### Run locally
 ```bash
 python main.py
 ```
 or
 ```bash
 gunicorn 'main:gunicorn()' -c conf/gunicorn.conf.py
+```
+
+#### Run in production
+```bash
+sudo supervisorctl start droom_api
 ```
