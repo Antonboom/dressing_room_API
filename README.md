@@ -9,11 +9,11 @@ local_settings.py
 
 #### Run locally
 ```bash
-python main.py
+python application.py
 ```
 or
 ```bash
-gunicorn 'main:gunicorn()' -c conf/gunicorn.conf.py
+gunicorn 'application:gunicorn()' -c conf/gunicorn.conf.py
 ```
 
 #### Run in production
