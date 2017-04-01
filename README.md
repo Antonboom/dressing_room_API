@@ -18,6 +18,15 @@ gunicorn 'application:gunicorn()' -c conf/gunicorn.conf.py
 
 #### Run in production
 ```bash
-sudo supervisorctl reload
-sudo supervisorctl restart droom_api
+sudo service supervisor reload
+sudo service supervisor restart droom_api
 ```
+
+#### Database
+```bash
+export FLASK_APP=application.py
+flask db init                       # If first time
+flask db migrate                    # And check the changes
+flask db upgrade
+```
+[More about Flask-Migrate](https://flask-migrate.readthedocs.io/en/latest/)

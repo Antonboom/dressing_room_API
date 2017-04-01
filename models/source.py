@@ -3,7 +3,7 @@
 from application import db
 
 
-class Source(db.Base):
+class Source(db.Model):
 
     __tablename__ = 'source'
 

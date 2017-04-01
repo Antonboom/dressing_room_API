@@ -8,8 +8,8 @@ class Color(db.Model):
     __table_name__ = 'color'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    hex = db.Column(db.String(64))
-    rgb = db.Column(db.String(64), nullable=False)
+    hex = db.Column(db.String(32))
+    rgb = db.Column(db.String(32), nullable=False)
     name = db.Column(db.String(64))
 
     def __init__(self, name, parent_id):

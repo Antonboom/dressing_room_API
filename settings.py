@@ -17,12 +17,15 @@ MYSQL_USER = ''
 MYSQL_PASSWORD = ''
 MYSQL_DB = 'droom_backend'
 
+DB_TRACK_MODIFICATIONS = False
+
 
 YANDEX_API_AUTH_TOKEN = 'vuD1vIbYy8Oufw0AcID1h1ySZ97YxL'
 
 
 try:
-    from local_setting import *
+    from local_settings import *
 
 except ImportError:
+    print('No local_settings')
     pass

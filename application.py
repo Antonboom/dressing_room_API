@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from flask.ext.sqlalchemy import SQLAlchemy
-
 import settings
 
 from urllib.parse import urljoin
 from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 from api.v0.handlers import api as api_v0
 
 
@@ -30,9 +30,14 @@ def _get_sql_alchemy_db_uri():
 app = Flask(__name__)
 app.register_blueprint(api_v0, url_prefix=_get_url_prefix())
 
-
 app.config['SQLALCHEMY_DATABASE_URI'] = _get_sql_alchemy_db_uri()
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = settings.DB_TRACK_MODIFICATIONS
+
 db = SQLAlchemy(app)
+
+import models               # Oh my God...
+
+migrate = Migrate(app, db)
 
 
 def main():
