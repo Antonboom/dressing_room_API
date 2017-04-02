@@ -17,6 +17,7 @@ class Good(db.Model):
     name = db.Column(db.String(128), nullable=False)
     price = db.Column(db.Integer, nullable=False)
     photo = db.Column(db.String(256), nullable=False)
+    uv_card = db.Column(db.String(256))
     url = db.Column(db.String(256), nullable=False)
     description = db.Column(db.Text(1024))
 
