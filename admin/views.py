@@ -3,6 +3,7 @@
 import flask_admin
 import flask_login
 
+from flask_admin.contrib import sqla
 from flask_admin import expose, helpers
 from flask import redirect, url_for, request
 
@@ -40,3 +41,9 @@ class AdminIndexView(flask_admin.AdminIndexView):
     def logout_view(self):
         flask_login.logout_user()
         return redirect(url_for('.index'))
+
+
+class ModelView(sqla.ModelView):
+
+    def is_accessible(self):
+        return flask_login.current_user.is_authenticated

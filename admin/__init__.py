@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from flask_admin import Admin
-from flask_admin.contrib.sqla import ModelView
 from flask_login import LoginManager
 from werkzeug.security import generate_password_hash
 
@@ -30,7 +29,7 @@ def init_admin(app):
 
     import models
     for model_name in models.__all__:
-        admin.add_view(ModelView(getattr(models, model_name), session=db.session))
+        admin.add_view(views.ModelView(getattr(models, model_name), session=db.session))
 
     return admin
 
