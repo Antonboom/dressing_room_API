@@ -7,9 +7,6 @@ from urllib.parse import urljoin
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-from flask_admin import Admin
-from flask_admin.contrib.sqla import ModelView
-
 
 from api.v0.handlers import api as api_v0
 
@@ -37,19 +34,19 @@ app.register_blueprint(api_v0, url_prefix=_get_url_prefix())
 
 app.config['SQLALCHEMY_DATABASE_URI'] = _get_sql_alchemy_db_uri()
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = settings.DB_TRACK_MODIFICATIONS
+app.config['SECRET_KEY'] = settings.SECRET_KEY
 
 db = SQLAlchemy(app)
 
-import models             # Oh my God...
+# Please save the import order
+import models
 
 migrate = Migrate(app, db)
 
 
 def main():
-    admin = Admin(app, name='Dressing room', url='/noadmin/', template_mode='bootstrap3')
-
-    for model_name in models.__all__:
-         admin.add_view(ModelView(getattr(models, model_name), db.session))
+    from admin import init_admin
+    init_admin(app)
 
     app.run(host=settings.HOST, port=settings.PORT, debug=settings.DEBUG)
 

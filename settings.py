@@ -5,6 +5,9 @@
 HOST = '0.0.0.0'
 PORT = 8080
 
+SECRET_KEY = ''
+
+ADMINS = ()     # ((login, password),)
 
 DEBUG = False
 
@@ -28,4 +31,3 @@ try:
 
 except ImportError:
     print('No local_settings')
-    pass

@@ -1,0 +1,41 @@
+{% extends 'admin/master.html' %}
+
+{% block body %}
+    {{ super() }}
+
+    <div class="row-fluid">
+        <div>
+            {% if current_user.is_authenticated %}
+                <h1>Dressing room</h1>
+                <p class="lead">
+                    Вас приветствует админка невъебенного сервиса.
+                </p>
+                <br>
+                <button class="btn btn-danger">
+                    <a href="{{ url_for('admin.logout_view') }}" style="color: white">Log out</a>
+                </button>
+            {% else %}
+                <form method="POST" action="" style="max-width: 300px;">
+                    {{ form.hidden_tag() if form.hidden_tag }}
+                    {% for field in form if field.type != 'CSRFTokenField' %}
+                        <div>
+                            {{ field.label }}
+                            {{ field(class_="form-control") }}
+
+                            {% if field.errors %}
+                                <ul style="color: darkred">
+                                    {% for error in field.errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+
+                    <br>
+                    <button class="btn btn-success" type="submit">Submit</button>
+                </form>
+            {% endif %}
+        </div>
+    </div>
+{% endblock body %}

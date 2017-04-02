@@ -13,7 +13,7 @@ class Good(db.Model):
 
     __table_name__ = 'good'
 
-    id = db.Column(db.Integer, primary_key=True, autoincrement=False)
+    id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(128), nullable=False)
     price = db.Column(db.Integer, nullable=False)
     photo = db.Column(db.String(256), nullable=False)

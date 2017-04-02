@@ -7,7 +7,7 @@ class Category(db.Model):
 
     __table_name__ = 'category'
 
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(128), nullable=False)
 
     parent_id = db.Column(db.Integer, db.ForeignKey('category.id'))

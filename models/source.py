@@ -7,7 +7,7 @@ class Source(db.Model):
 
     __tablename__ = 'source'
 
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(128), unique=True, nullable=False)
     site_url = db.Column(db.String(128), unique=True, nullable=False)
     logo_url = db.Column(db.String(256), nullable=False)

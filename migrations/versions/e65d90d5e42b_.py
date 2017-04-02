@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: fb27c32a9b08
+Revision ID: e65d90d5e42b
 Revises: 
-Create Date: 2017-04-01 14:15:19.908335
+Create Date: 2017-04-02 12:03:24.017362
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'fb27c32a9b08'
+revision = 'e65d90d5e42b'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -46,20 +46,22 @@ def upgrade():
     sa.UniqueConstraint('site_url')
     )
     op.create_table('good',
-    sa.Column('id', sa.Integer(), autoincrement=False, nullable=False),
+    sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=128), nullable=False),
     sa.Column('price', sa.Integer(), nullable=False),
     sa.Column('photo', sa.String(length=256), nullable=False),
     sa.Column('url', sa.String(length=256), nullable=False),
     sa.Column('description', sa.Text(length=1024), nullable=True),
     sa.Column('category_id', sa.Integer(), nullable=True),
+    sa.Column('source_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['category_id'], ['category.id'], ),
+    sa.ForeignKeyConstraint(['source_id'], ['source.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('colors',
     sa.Column('good_id', sa.Integer(), nullable=True),
     sa.Column('color_id', sa.Integer(), nullable=True),
-    sa.ForeignKeyConstraint(['color_id'], ['category.id'], ),
+    sa.ForeignKeyConstraint(['color_id'], ['color.id'], ),
     sa.ForeignKeyConstraint(['good_id'], ['good.id'], )
     )
     # ### end Alembic commands ###

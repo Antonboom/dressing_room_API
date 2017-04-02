@@ -7,7 +7,7 @@ class Color(db.Model):
 
     __table_name__ = 'color'
 
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    id = db.Column(db.Integer, primary_key=True)
     hex = db.Column(db.String(32))
     rgb = db.Column(db.String(32), nullable=False)
     name = db.Column(db.String(64))
