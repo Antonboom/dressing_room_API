@@ -3,9 +3,14 @@
 import settings
 
 from urllib.parse import urljoin
+
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from flask_admin import Admin
+from flask_admin.contrib.sqla import ModelView
+
+
 from api.v0.handlers import api as api_v0
 
 
@@ -35,12 +40,17 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = settings.DB_TRACK_MODIFICATIONS
 
 db = SQLAlchemy(app)
 
-import models               # Oh my God...
+import models             # Oh my God...
 
 migrate = Migrate(app, db)
 
 
 def main():
+    admin = Admin(app, name='Dressing room', url='/noadmin/', template_mode='bootstrap3')
+
+    for model_name in models.__all__:
+         admin.add_view(ModelView(getattr(models, model_name), db.session))
+
     app.run(host=settings.HOST, port=settings.PORT, debug=settings.DEBUG)
 
 

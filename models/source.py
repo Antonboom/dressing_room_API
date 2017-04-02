@@ -13,7 +13,7 @@ class Source(db.Model):
     logo_url = db.Column(db.String(256), nullable=False)
     is_active = db.Column(db.Boolean, default=False)
 
-    categories = db.relationship('Category')
+    goods = db.relationship('Good', backref=db.backref('source'))
 
     def __init__(self, name, site_url, logo_url, is_active=False):
         self.name = name

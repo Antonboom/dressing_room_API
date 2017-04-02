@@ -5,7 +5,7 @@ from application import db
 
 colors = db.Table('colors',
     db.Column('good_id', db.Integer, db.ForeignKey('good.id')),
-    db.Column('color_id', db.Integer, db.ForeignKey('category.id'))
+    db.Column('color_id', db.Integer, db.ForeignKey('color.id'))
 )
 
 
@@ -21,6 +21,7 @@ class Good(db.Model):
     description = db.Column(db.Text(1024))
 
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
+    source_id = db.Column(db.Integer, db.ForeignKey('source.id'))
 
     colors = db.relationship('Color', secondary=colors, backref=db.backref('goods', lazy='dynamic'))
 
