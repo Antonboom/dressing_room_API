@@ -30,10 +30,16 @@ class Category(db.Model):
         self.lamoda_url = lamoda_url
         self.is_childish = is_childish
 
-    def __str__(self):
-        return 'Категория "{}", {}, is_childish: {}, parent: {}'.format(
-            self.name,
-            self.gender,
-            self.is_childish,
-            self.parent_id
-        )
+    def __repr__(self):
+        return '<Category "{}">'.format(self.name)
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'parent_id': self.parent_id,
+            'gender': self.gender,
+            'is_childish': self.is_childish,
+            'childrens': len(self.childrens),
+            'goods': len(self.goods),
+        }
