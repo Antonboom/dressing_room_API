@@ -40,6 +40,7 @@ db = SQLAlchemy(app)
 
 # Please save the import order
 import models
+import admin.models
 
 migrate = Migrate(app, db)
 

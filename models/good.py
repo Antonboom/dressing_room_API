@@ -21,6 +21,9 @@ class Good(db.Model):
     url = db.Column(db.String(256), nullable=False)
     description = db.Column(db.Text(1024))
 
+    gender = db.Column(db.String(64), nullable=False)
+    is_childish = db.Column(db.Boolean, default=False)
+
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
     source_id = db.Column(db.Integer, db.ForeignKey('source.id'))
 

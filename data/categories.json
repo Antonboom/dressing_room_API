@@ -1,0 +1,55 @@
+[
+  {
+    "id": 1,
+    "name": "Брюки",
+    "parent_id": null,
+    "gender": "male",
+    "is_childish": false,
+    "lamoda_url": null
+  },
+
+  {
+    "id": 11,
+    "name": "Классические брюки",
+    "parent_id": 1,
+    "gender": "male",
+    "is_childish": false,
+    "lamoda_url": "http://www.lamoda.ru/c/725/clothes-muzhskie-bryuki-klassicheskiye/"
+  },
+
+  {
+    "id": 12,
+    "name": "Зауженные брюки",
+    "parent_id": 1,
+    "gender": "male",
+    "is_childish": false,
+    "lamoda_url": "http://www.lamoda.ru/c/6100/clothes-muzhzauzhennyebryuki/"
+  },
+
+  {
+    "id": 2,
+    "name": "Джемперы, свитеры и кардиганы",
+    "parent_id": null,
+    "gender": "male",
+    "is_childish": false,
+    "lamoda_url": null
+  },
+
+  {
+    "id": 21,
+    "name": "Водолазки",
+    "parent_id": 2,
+    "gender": "male",
+    "is_childish": false,
+    "lamoda_url": "http://www.lamoda.ru/c/501/clothes-muzhskie-vodolazki/"
+  },
+
+  {
+    "id": 22,
+    "name": "Джемперы",
+    "parent_id": 2,
+    "gender": "male",
+    "is_childish": false,
+    "lamoda_url": "http://www.lamoda.ru/c/5975/clothes-muzhjempery/"
+  }
+]
