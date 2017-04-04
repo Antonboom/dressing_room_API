@@ -35,7 +35,6 @@ class YandexMarketAPI:
         url = request.Request(url=api_url, data=data, headers=headers)
 
         try:
-            print(url.get_full_url())
             response = request.urlopen(url)
             # TODO: XML support
             response_data = response.read()

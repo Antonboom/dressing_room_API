@@ -1,6 +1,10 @@
-Flask==0.12
 gunicorn==19.6.0
+
+Flask==0.12
 Flask-SQLAlchemy==2.2
 Flask-Migrate==2.0.3
 Flask-Admin==1.5.0
 Flask-Login==0.4.0
+
+user_agent==0.1.8
+beautifulsoup4===4.5.3
