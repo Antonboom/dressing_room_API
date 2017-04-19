@@ -100,7 +100,7 @@ class Product(SetFieldsMixin, db.Model):
 
         logging.debug('Loading product photo from {}'.format(photo_url))
 
-        response = request.urlopen(photo_url, timeout=3)
+        response = request.urlopen(photo_url, timeout=10)
         photo_data = response.read()
 
         with open(photo_path, 'wb') as photo:

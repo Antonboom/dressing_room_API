@@ -44,6 +44,8 @@ class MarketPlaceCategoryParser:
         :type category: models.Category
         """
 
+        self._visited_urls = []
+
         self._request = request or urllib.request
 
         if self.USE_PROXY:
@@ -104,10 +106,11 @@ class MarketPlaceCategoryParser:
         logging.info('Page: {}, product count: {}'.format(page, len(product_urls)))
 
         for product_url in product_urls:
-            if len(list(filter(lambda product_: product_.url == product_url, products))) > 0:
+            if product_url in self._visited_urls:
                 logging.info('Skipping duplicate product {}'.format(product_url))
                 continue
 
+            self._visited_urls.append(product_url)
             logging.info('Parsing product from {}'.format(product_url))
 
             page = self._make_request_as_human(product_url)

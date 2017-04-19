@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import traceback
 import sys
 import logging
 
@@ -50,8 +49,9 @@ def lamoda_parsing():
     for category in categories:
         logging.info('Parsing category {}'.format(category))
 
+        parser = LamodaCategoryParser(category=category, source=source)
         for page in range(1, PAGES_COUNT + 1):
-            products = LamodaCategoryParser(category=category, source=source).get_products(page)
+            products = parser.get_products(page)
 
             product_count = 0
 
@@ -62,7 +62,6 @@ def lamoda_parsing():
 
                     logger.info('New product {} added'.format(product))
                     product_count += 1
-                    print('.', end='')
 
                 except Exception as exception:
                     db.session.rollback()
