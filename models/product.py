@@ -18,6 +18,12 @@ product_color = db.Table('product_color',
 )
 
 
+product_size = db.Table('product_size',
+    db.Column('product_id', db.Integer, db.ForeignKey('product.id')),
+    db.Column('size_id', db.Integer, db.ForeignKey('size.id'))
+)
+
+
 class Product(SetFieldsMixin, db.Model):
 
     __table_name__ = 'product'
@@ -27,7 +33,7 @@ class Product(SetFieldsMixin, db.Model):
     price = db.Column(db.Integer, nullable=False)
     photo = db.Column(db.String(256))
     uv_card = db.Column(db.String(256))
-    url = db.Column(db.String(256), unique=True, nullable=False)
+    url = db.Column(db.String(256), unique=True)
     description = db.Column(db.Text(1024))
 
     gender = db.Column(db.String(64), nullable=False)
@@ -38,16 +44,19 @@ class Product(SetFieldsMixin, db.Model):
 
     colors = db.relationship('Color', secondary=product_color, backref=db.backref('goods', lazy='dynamic'))
 
+    sizes = db.relationship('Size', secondary=product_size, backref=db.backref('products', lazy='dynamic'))
+
     # Брюки
     height = db.Column(db.SmallInteger)                      # Высота
     inner_seam_length = db.Column(db.SmallInteger)           # Длина по внутреннему шву
     along_side_seam_length = db.Column(db.SmallInteger)      # Длина по боковому шву
-    circumference_at_waist = db.Column(db.SmallInteger)      # Обхват по талии
-    circumference_at_hips = db.Column(db.SmallInteger)       # Обхват по бедрам
-    bottom_width = db.Column(db.SmallInteger)              # Обхват по низу
+    waist_girth = db.Column(db.SmallInteger)                 # Обхват по талии
+    hip_girth = db.Column(db.SmallInteger)                   # Обхват по бедрам
+    bottom_width = db.Column(db.SmallInteger)                # Ширина по низу
 
     # Верхняя одежда
     length = db.Column(db.SmallInteger)                      # Длина
+    sleeve_length = db.Column(db.SmallInteger)               # Длина рукава
 
     required_fields = (
         'name',
@@ -65,9 +74,12 @@ class Product(SetFieldsMixin, db.Model):
         'height',
         'inner_seam_length',
         'along_side_seam_length',
-        'circumference_at_waist',
-        'circumference_at_hips',
-        'bottom_width'
+        'waist_girth',
+        'hip_girth',
+        'bottom_width',
+
+        'length',
+        'sleeve_length',
     )
 
     def __init__(self, *args, **kwargs):

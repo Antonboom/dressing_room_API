@@ -15,11 +15,11 @@ class Source(db.Model):
 
     products = db.relationship('Product', backref=db.backref('source'))
 
-    # def __init__(self, name, site_url, logo_url, is_active=False):
-    #     self.name = name
-    #     self.site_url = site_url
-    #     self.logo_url = logo_url
-    #     self.is_active = is_active
+    def __init__(self, name, site_url, logo_url, is_active=False):
+        self.name = name
+        self.site_url = site_url
+        self.logo_url = logo_url
+        self.is_active = is_active
 
     def __repr__(self):
         return '<Source {} "{}">'.format(self.id, self.name)

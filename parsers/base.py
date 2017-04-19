@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import traceback
 import os
 import random
 import gzip
@@ -97,18 +98,18 @@ class MarketPlaceCategoryParser:
         for page in range(1, pages_count + 1):
             product_urls = self.get_product_pages_urls(page)
 
-            for product_url in product_urls:
+            for product_url in product_urls[:1]:
                 print(product_url)
 
                 page = self._make_request_as_human(product_url)
                 soup = HtmlSoup(page)
 
+                product = None
                 try:
                     product = self.get_product(soup)
 
                 except Exception as exception:
-                    print('LOL', exception)
-                    db.session.rollback()
+                    print('Received error: ', exception, traceback.format_exc())
 
                 if not product:
                     continue
