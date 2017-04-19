@@ -1,6 +1,12 @@
 # -*- coding: utf-8 -*-
 
+import os
+
 # TODO: MAKE SECRET DATA TRULY SECRET
+
+PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
+STATIC_PATH = os.path.join(PROJECT_DIR, 'static')
+STATIC_URL = 'http://cache.mydressing.ru/'
 
 HOST = '0.0.0.0'
 PORT = 8080

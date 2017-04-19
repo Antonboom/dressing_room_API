@@ -6,12 +6,13 @@ import json
 
 sys.path.append('.')
 
+import settings
+
 from application import db
 from models import Category
 
 
-PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-CATEGORIES_DATA_PATH = os.path.join(PROJECT_DIR, 'data', 'categories.json')
+CATEGORIES_DATA_PATH = os.path.join(settings.PROJECT_DIR, 'data', 'categories.json')
 
 
 def init_categories():

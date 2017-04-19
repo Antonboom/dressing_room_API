@@ -2,12 +2,14 @@
 
 from .category import Category
 from .color import Color
-from .good import Good
+from .product import Product
 from .source import Source
+from .size import Size
 
 __all__ = (
     'Source',
     'Category',
-    'Good',
-    'Color'
+    'Product',
+    'Color',
+    'Size',
 )

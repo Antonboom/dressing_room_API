@@ -3,9 +3,15 @@
 from application import db
 
 
+category_size = db.Table('category_size',
+    db.Column('category_id', db.Integer, db.ForeignKey('category.id')),
+    db.Column('size_id', db.Integer, db.ForeignKey('size.id'))
+)
+
+
 class Category(db.Model):
 
-    __table_name__ = 'category'
+    __tablename__ = 'category'
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(128), nullable=False)
@@ -18,7 +24,8 @@ class Category(db.Model):
 
     lamoda_url = db.Column(db.String(256), nullable=True, unique=True)
 
-    goods = db.relationship('Good', backref=db.backref('category'))
+    products = db.relationship('Product', backref=db.backref('category'))
+    sizes = db.relationship('Size', secondary=category_size)
 
     def __init__(self, name, parent_id, gender, id=None, lamoda_url=None, is_childish=False):
         if id:
@@ -31,7 +38,7 @@ class Category(db.Model):
         self.is_childish = is_childish
 
     def __repr__(self):
-        return '<Category "{}">'.format(self.name)
+        return '<Category {} "{}">'.format(self.id, self.name)
 
     def serialize(self):
         return {
@@ -41,5 +48,5 @@ class Category(db.Model):
             'gender': self.gender,
             'is_childish': self.is_childish,
             'childrens': len(self.childrens),
-            'goods': len(self.goods),
+            'products': len(self.products),
         }

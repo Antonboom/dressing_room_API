@@ -75,3 +75,5 @@ logs/
 *.log
 local_settings.py
 configs
+static/images/products/photo/*
+static/images/products/uv_card/*

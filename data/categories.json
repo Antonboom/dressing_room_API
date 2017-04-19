@@ -1,17 +1,26 @@
 [
   {
-    "id": 1,
-    "name": "Брюки",
+    "id": 1000,
+    "name": "Мужская одежда",
     "parent_id": null,
     "gender": "male",
     "is_childish": false,
-    "lamoda_url": null
+    "lamoda_url": "http://www.lamoda.ru/c/477/clothes-muzhskaya-odezhda/"
+  },
+
+  {
+    "id": 10,
+    "name": "Брюки",
+    "parent_id": 1000,
+    "gender": "male",
+    "is_childish": false,
+    "lamoda_url": "http://www.lamoda.ru/c/517/clothes-muzhskie-bryuki/"
   },
 
   {
     "id": 11,
     "name": "Классические брюки",
-    "parent_id": 1,
+    "parent_id": 10,
     "gender": "male",
     "is_childish": false,
     "lamoda_url": "http://www.lamoda.ru/c/725/clothes-muzhskie-bryuki-klassicheskiye/"
@@ -20,36 +29,360 @@
   {
     "id": 12,
     "name": "Зауженные брюки",
-    "parent_id": 1,
+    "parent_id": 10,
     "gender": "male",
     "is_childish": false,
     "lamoda_url": "http://www.lamoda.ru/c/6100/clothes-muzhzauzhennyebryuki/"
   },
 
   {
-    "id": 2,
-    "name": "Джемперы, свитеры и кардиганы",
-    "parent_id": null,
+    "id": 13,
+    "name": "Спортивные брюки",
+    "parent_id": 10,
     "gender": "male",
     "is_childish": false,
-    "lamoda_url": null
+    "lamoda_url": "http://www.lamoda.ru/c/2299/clothes-muzhskie-bryuki-sportivnie/"
+  },
+
+  {
+    "id": 20,
+    "name": "Верхняя одежда",
+    "parent_id": 1000,
+    "gender": "male",
+    "is_childish": false,
+    "lamoda_url": "http://www.lamoda.ru/c/479/clothes-muzhskaya-verkhnyaya-odezhda/"
   },
 
   {
     "id": 21,
+    "name": "Жилеты",
+    "parent_id": 20,
+    "gender": "male",
+    "is_childish": false,
+    "lamoda_url": "http://www.lamoda.ru/c/495/clothes-muzhskie-zhilety/"
+  },
+
+  {
+    "id": 22,
+    "name": "Пальто",
+    "parent_id": 20,
+    "gender": "male",
+    "is_childish": false,
+    "lamoda_url": "http://www.lamoda.ru/c/487/clothes-muzhskie-palto/"
+  },
+
+  {
+    "id": 30,
+    "name": "Джемперы и свитеры",
+    "parent_id": 1000,
+    "gender": "male",
+    "is_childish": false,
+    "lamoda_url": "http://www.lamoda.ru/c/497/clothes-muzhskoy-trikotazh/"
+  },
+
+  {
+    "id": 31,
     "name": "Водолазки",
-    "parent_id": 2,
+    "parent_id": 30,
     "gender": "male",
     "is_childish": false,
     "lamoda_url": "http://www.lamoda.ru/c/501/clothes-muzhskie-vodolazki/"
   },
 
   {
-    "id": 22,
-    "name": "Джемперы",
-    "parent_id": 2,
+    "id": 32,
+    "name": "Джемперы и пуловеры",
+    "parent_id": 30,
     "gender": "male",
     "is_childish": false,
-    "lamoda_url": "http://www.lamoda.ru/c/5975/clothes-muzhjempery/"
+    "lamoda_url": "http://www.lamoda.ru/c/503/clothes-muzhskie-dempery-i-svitery/"
+  },
+
+  {
+    "id": 33,
+    "name": "Свитеры",
+    "parent_id": 30,
+    "gender": "male",
+    "is_childish": false,
+    "lamoda_url": "http://www.lamoda.ru/c/5288/clothes-svitery-muj/"
+  },
+
+  {
+    "id": 40,
+    "name": "Джинсы",
+    "parent_id": 1000,
+    "gender": "male",
+    "is_childish": false,
+    "lamoda_url": "http://www.lamoda.ru/c/513/clothes-muzhskie-d-insy/"
+  },
+
+  {
+    "id": 41,
+    "name": "Зауженные джинсы",
+    "parent_id": 40,
+    "gender": "male",
+    "is_childish": false,
+    "lamoda_url": "http://www.lamoda.ru/c/2635/clothes-zauzhennyem/"
+  },
+
+  {
+    "id": 42,
+    "name": "Прямые джинсы",
+    "parent_id": 40,
+    "gender": "male",
+    "is_childish": false,
+    "lamoda_url": "http://www.lamoda.ru/c/2636/clothes-pryamyem/"
+  },
+
+  {
+    "id": 50,
+    "name": "Майки",
+    "parent_id": 1000,
+    "gender": "male",
+    "is_childish": false,
+    "lamoda_url": "http://www.lamoda.ru/c/3039/clothes-topyi-muzhskie/"
+  },
+
+  {
+    "id": 51,
+    "name": "Майки",
+    "parent_id": 50,
+    "gender": "male",
+    "is_childish": false,
+    "lamoda_url": "http://www.lamoda.ru/c/2516/clothes-muzhskie-maiki/"
+  },
+
+  {
+    "id": 52,
+    "name": "Спортивные майки",
+    "parent_id": 50,
+    "gender": "male",
+    "is_childish": false,
+    "lamoda_url": "http://www.lamoda.ru/c/3040/clothes-sportivnye-topy-muzhskie/"
+  },
+
+  {
+    "id": 60,
+    "name": "Нижнее белье",
+    "parent_id": 1000,
+    "gender": "male",
+    "is_childish": false,
+    "lamoda_url": "http://www.lamoda.ru/c/523/clothes-muzhskoe-nizhneye-belyo/"
+  },
+
+  {
+    "id": 61,
+    "name": "Боксеры",
+    "parent_id": 60,
+    "gender": "male",
+    "is_childish": false,
+    "lamoda_url": "http://www.lamoda.ru/c/5291/clothes-bokserymuj/"
+  },
+
+  {
+    "id": 62,
+    "name": "Брифы",
+    "parent_id": 60,
+    "gender": "male",
+    "is_childish": false,
+    "lamoda_url": "http://www.lamoda.ru/c/5290/clothes-brifymuj/"
+  },
+
+  {
+    "id": 70,
+    "name": "Плавки и шорты для плавания",
+    "parent_id": 1000,
+    "gender": "male",
+    "is_childish": false,
+    "lamoda_url": "http://www.lamoda.ru/c/2526/clothes-plyazhnaya-odezhda/"
+  },
+
+  {
+    "id": 71,
+    "name": "Плавки",
+    "parent_id": 70,
+    "gender": "male",
+    "is_childish": false,
+    "lamoda_url": "http://www.lamoda.ru/c/2527/clothes-plavki/"
+  },
+
+  {
+    "id": 72,
+    "name": "Шорты для плавания",
+    "parent_id": 70,
+    "gender": "male",
+    "is_childish": false,
+    "lamoda_url": "http://www.lamoda.ru/c/2528/clothes-shorty-dlya-plavaniya/"
+  },
+
+  {
+    "id": 80,
+    "name": "Рубашки",
+    "parent_id": 1000,
+    "gender": "male",
+    "is_childish": false,
+    "lamoda_url": "http://www.lamoda.ru/c/515/clothes-muzhskie-rubashki-i-sorochki/"
+  },
+
+  {
+    "id": 81,
+    "name": "Джинсовые рубашки",
+    "parent_id": 80,
+    "gender": "male",
+    "is_childish": false,
+    "lamoda_url": "http://www.lamoda.ru/c/4076/clothes-muzhskie-rubashki-jeans/"
+  },
+
+  {
+    "id": 82,
+    "name": "Рубашки с длинным рукавом",
+    "parent_id": 80,
+    "gender": "male",
+    "is_childish": false,
+    "lamoda_url": "http://www.lamoda.ru/c/2518/clothes-muzhskie-rubashki-s-dlinnym/"
+  },
+
+  {
+    "id": 83,
+    "name": "Рубашки с коротким рукавом",
+    "parent_id": 80,
+    "gender": "male",
+    "is_childish": false,
+    "lamoda_url": "http://www.lamoda.ru/c/2517/clothes-muzhskie-rubashki-s-korotkim/"
+  },
+
+  {
+    "id": 90,
+    "name": "Мужские толстовки и олимпийки",
+    "parent_id": 1000,
+    "gender": "male",
+    "is_childish": false,
+    "lamoda_url": "http://www.lamoda.ru/c/2508/clothes-tolstovki-i-olimpiyki/"
+  },
+
+  {
+    "id": 91,
+    "name": "Олимпийки",
+    "parent_id": 90,
+    "gender": "male",
+    "is_childish": false,
+    "lamoda_url": "http://www.lamoda.ru/c/2510/clothes-muzhskie-olympiiki/"
+  },
+
+  {
+    "id": 92,
+    "name": "Свитшоты",
+    "parent_id": 90,
+    "gender": "male",
+    "is_childish": false,
+    "lamoda_url": "http://www.lamoda.ru/c/3564/clothes-sweatshirts-men/"
+  },
+
+  {
+    "id": 93,
+    "name": "Толстовки",
+    "parent_id": 90,
+    "gender": "male",
+    "is_childish": false,
+    "lamoda_url": "http://www.lamoda.ru/c/3210/clothes-muzhskie-tolstovki/"
+  },
+
+  {
+    "id": 94,
+    "name": "Флисовая одежда",
+    "parent_id": 90,
+    "gender": "male",
+    "is_childish": false,
+    "lamoda_url": "http://www.lamoda.ru/c/3037/clothes-flis-tolstovki-muzhskie/"
+  },
+
+  {
+    "id": 100,
+    "name": "Футболки и поло",
+    "parent_id": 1000,
+    "gender": "male",
+    "is_childish": false,
+    "lamoda_url": "http://www.lamoda.ru/c/2512/clothes-muzhskie-futbolki/"
+  },
+
+  {
+    "id": 101,
+    "name": "Поло",
+    "parent_id": 100,
+    "gender": "male",
+    "is_childish": false,
+    "lamoda_url": "http://www.lamoda.ru/c/2515/clothes-muzhskie-futbolki-polo/"
+  },
+
+  {
+    "id": 102,
+    "name": "Футболки с коротким рукавом",
+    "parent_id": 100,
+    "gender": "male",
+    "is_childish": false,
+    "lamoda_url": "http://www.lamoda.ru/c/2513/clothes-muz-futbolki-s-korotkim/"
+  },
+
+  {
+    "id": 103,
+    "name": "Спортивные футболки",
+    "parent_id": 100,
+    "gender": "male",
+    "is_childish": false,
+    "lamoda_url": "http://www.lamoda.ru/c/3038/clothes-sportivnye-futbolki-muzhskie/"
+  },
+
+  {
+    "id": 104,
+    "name": "Спортивные лонгсливы",
+    "parent_id": 100,
+    "gender": "male",
+    "is_childish": false,
+    "lamoda_url": "http://www.lamoda.ru/c/6101/clothes-muzhsportivnyelongslivy/"
+  },
+
+  {
+    "id": 110,
+    "name": "Шорты",
+    "parent_id": 1000,
+    "gender": "male",
+    "is_childish": false,
+    "lamoda_url": "http://www.lamoda.ru/c/519/clothes-muzhskie-shorty/"
+  },
+
+  {
+    "id": 111,
+    "name": "Бриджи",
+    "parent_id": 110,
+    "gender": "male",
+    "is_childish": false,
+    "lamoda_url": "http://www.lamoda.ru/c/3041/clothes-kapri-muzhskie/"
+  },
+
+  {
+    "id": 112,
+    "name": "Джинсовые шорты",
+    "parent_id": 110,
+    "gender": "male",
+    "is_childish": false,
+    "lamoda_url": "http://www.lamoda.ru/c/2520/clothes-muz-jeans-shorty/"
+  },
+
+  {
+    "id": 113,
+    "name": "Повседневные шорты",
+    "parent_id": 110,
+    "gender": "male",
+    "is_childish": false,
+    "lamoda_url": "http://www.lamoda.ru/c/2523/clothes-muz-povsednevnye-shorty/"
+  },
+
+  {
+    "id": 114,
+    "name": "Спортивные шорты",
+    "parent_id": 110,
+    "gender": "male",
+    "is_childish": false,
+    "lamoda_url": "http://www.lamoda.ru/c/2521/clothes-muz-sport-shorty/"
   }
 ]

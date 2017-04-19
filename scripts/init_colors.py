@@ -6,12 +6,13 @@ import json
 
 sys.path.append('.')
 
+import settings
+
 from application import db
 from models import Color
 
 
-PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-COLORS_DATA_PATH = os.path.join(PROJECT_DIR, 'data', 'colors.json')
+COLORS_DATA_PATH = os.path.join(settings.PROJECT_DIR, 'data', 'colors.json')
 
 
 def init_colors():

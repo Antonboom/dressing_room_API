@@ -5,7 +5,7 @@ from application import db
 
 class Color(db.Model):
 
-    __table_name__ = 'color'
+    __tablename__ = 'color'
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), nullable=False)
