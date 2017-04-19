@@ -28,8 +28,13 @@ def init_admin(app):
     )
 
     import models
-    for model_name in models.__all__:
-        admin.add_view(views.ModelView(getattr(models, model_name), session=db.session))
+    model_names = models.__all__
+
+    admin.add_view(views.ProductView(models.Product, session=db.session))
+    model_names.remove('Product')
+
+    [admin.add_view(views.ModelView(getattr(models, model_name), session=db.session))
+     for model_name in model_names]
 
     return admin
 

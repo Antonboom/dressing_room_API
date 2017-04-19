@@ -2,6 +2,7 @@
 
 import os
 import hashlib
+import logging
 
 from urllib import request
 from urllib.parse import urljoin
@@ -12,15 +13,20 @@ from application import db
 from models.mixins import SetFieldsMixin
 
 
+logger = logging.getLogger(__name__)
+
+
 product_color = db.Table('product_color',
     db.Column('product_id', db.Integer, db.ForeignKey('product.id')),
-    db.Column('color_id', db.Integer, db.ForeignKey('color.id'))
+    db.Column('color_id', db.Integer, db.ForeignKey('color.id')),
+    db.UniqueConstraint('product_id', 'color_id', name='US_product_id_color_id')
 )
 
 
 product_size = db.Table('product_size',
     db.Column('product_id', db.Integer, db.ForeignKey('product.id')),
-    db.Column('size_id', db.Integer, db.ForeignKey('size.id'))
+    db.Column('size_id', db.Integer, db.ForeignKey('size.id')),
+    db.UniqueConstraint('product_id', 'size_id', name='US_product_id_size_id')
 )
 
 
@@ -89,15 +95,19 @@ class Product(SetFieldsMixin, db.Model):
         return '<Product "{}:{}">'.format(self.name, self.url)
 
     def set_photo(self, photo_url):
-        photo_file_name = hashlib.sha256(str(self.url).encode('utf-8')).hexdigest() + '.jpeg'
+        photo_file_name = hashlib.sha256(photo_url.encode('utf-8')).hexdigest() + '.jpeg'
         photo_path = os.path.join(settings.STATIC_PATH, 'images', 'products', 'photo', photo_file_name)
 
-        response = request.urlopen(photo_url)
+        logging.debug('Loading product photo from {}'.format(photo_url))
+
+        response = request.urlopen(photo_url, timeout=3)
         photo_data = response.read()
 
         with open(photo_path, 'wb') as photo:
             photo.write(photo_data)
         photo.close()
+
+        logging.debug('Save product photo to {}'.format(photo_path))
 
         photo_url = urljoin(settings.STATIC_URL, 'products') + '/' + photo_file_name
 

@@ -32,6 +32,9 @@ DB_TRACK_MODIFICATIONS = False
 YANDEX_API_AUTH_TOKEN = 'vuD1vIbYy8Oufw0AcID1h1ySZ97YxL'
 
 
+PARSING_LOG_FILE = os.path.join(PROJECT_DIR, 'logs/parsing.log')
+
+
 try:
     from local_settings import *
 

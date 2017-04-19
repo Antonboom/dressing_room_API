@@ -16,3 +16,6 @@ class Color(db.Model):
         self.name = name
         self.hex = hex
         self.rgb = rgb
+
+    def __repr__(self):
+        return '<Color "{}, #{}">'.format(self.name, self.hex)

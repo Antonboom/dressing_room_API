@@ -1,10 +1,15 @@
 # -*- coding: utf-8 -*-
 
+import logging
+
 from urllib.parse import urljoin
 
-from models import Product, Color, Size
+from models import Product, Color
 from parsers.base import MarketPlaceCategoryParser
 from parsers.utils import HtmlSoup
+
+
+logger = logging.getLogger(__name__)
 
 
 class LamodaCategoryParser(MarketPlaceCategoryParser):
@@ -103,18 +108,21 @@ class LamodaCategoryParser(MarketPlaceCategoryParser):
             :type size: int|str
             """
 
-            try:
-                size = int(size)
+            if '/' in size:
+                size = size.split('/')[0]
 
-            except ValueError:
-                if '/' in size:
-                    size = int(size.split('/')[0])
+            elif ' ' in size:
+                size = size.split(' ')[0]
 
-                elif size.isalnum():
-                    size = self._only_alphas(size)
+            if size.isalpha():
+                size = size.upper()
 
-                else:
-                    size = size.upper()
+            else:
+                try:
+                    size = int(size)
+
+                except ValueError:
+                    size = size[:2]
 
             return size
 
@@ -123,14 +131,9 @@ class LamodaCategoryParser(MarketPlaceCategoryParser):
         if sizes_column:
             sizes = sizes_column.find_all('div', attrs={'class': 'ii-select__option'})
 
-            try:
-                sizes = [_canonize(price.get('data-brand-size'))
-                         for price in sizes
-                         if 'ii-select__option_disabled' not in price.get('class')]
-
-            except TypeError:
-                sizes = []
-
+            sizes = [_canonize(price.get('data-display'))
+                     for price in sizes
+                     if 'ii-select__option_disabled' not in price.get('class')]
         else:
             sizes = []
 
@@ -185,13 +188,16 @@ class LamodaCategoryParser(MarketPlaceCategoryParser):
 
         product = Product(**product_data)
 
-        sizes = self._get_product_sizes(product_page_soup)
-        for size_value in sizes:
+        size_values = self._get_product_sizes(product_page_soup)
+        for size_value in size_values:
+            category_sizes = self.category.sizes
+
             if isinstance(size_value, str):
-                size = Size.query.filter_by(category_id=product.category_id, international=size_value).first()
+                sizes = category_sizes.filter_by(international=size_value).all()
             else:
-                size = Size.query.filter_by(category_id=product.category_id, russia=size_value).first()
-            product.sizes.append(size)
+                sizes = category_sizes.filter_by(russia=size_value).all()
+
+            [product.sizes.append(size) for size in sizes]
 
         if colors:
             for color_name in colors:

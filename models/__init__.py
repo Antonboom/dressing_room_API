@@ -6,10 +6,10 @@ from .product import Product
 from .source import Source
 from .size import Size
 
-__all__ = (
+__all__ = [
     'Source',
     'Category',
     'Product',
     'Color',
     'Size',
-)
+]

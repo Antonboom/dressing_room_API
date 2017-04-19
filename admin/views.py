@@ -6,8 +6,10 @@ import flask_login
 from flask_admin.contrib import sqla
 from flask_admin import expose, helpers
 from flask import redirect, url_for, request
+from markupsafe import Markup
 
 from admin.forms import LoginForm
+from admin import utils
 
 
 class AdminIndexView(flask_admin.AdminIndexView):
@@ -47,3 +49,24 @@ class ModelView(sqla.ModelView):
 
     def is_accessible(self):
         return flask_login.current_user.is_authenticated
+
+
+class ProductView(ModelView):
+
+    DESCRIPTION_LIMIT = 70
+    PHOTO_SIZE = 100
+
+    def _description_formatter(self, context, model, name):
+        return utils.ellipsis(model.description, self.DESCRIPTION_LIMIT)
+
+    def _photo_formatter(self, context, model, name):
+        return Markup('<img src="{}" width="{}">'.format(model.photo, self.PHOTO_SIZE))
+
+    def _url_formatter(self, context, model, name):
+        return Markup('<a href="{}">Ссылка на товар</a>'.format(model.url))
+
+    column_formatters = {
+        'description': _description_formatter,
+        'photo': _photo_formatter,
+        'url': _url_formatter
+    }

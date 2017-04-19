@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
-import traceback
 import os
 import random
 import gzip
 import time
 import urllib
+import logging
 
 from urllib import request
 from urllib.parse import urlencode, urlparse
@@ -13,6 +13,7 @@ from user_agent import generate_user_agent
 
 from application import db
 from parsers.utils import HtmlSoup
+
 
 """
 Proxy sources:
@@ -24,6 +25,9 @@ Proxy sources:
 __all__ = (
     'MarketPlaceCategoryParser',
 )
+
+
+logger = logging.getLogger(__name__)
 
 
 class MarketPlaceCategoryParser:
@@ -92,31 +96,37 @@ class MarketPlaceCategoryParser:
     def get_product(self, product_page_soup):
         raise NotImplementedError
 
-    def get_products(self, pages_count=1):
+    def get_products(self, page=1):
         products = []
 
-        for page in range(1, pages_count + 1):
-            product_urls = self.get_product_pages_urls(page)
+        product_urls = self.get_product_pages_urls(page)
 
-            for product_url in product_urls[:1]:
-                print(product_url)
+        logging.info('Page: {}, product count: {}'.format(page, len(product_urls)))
 
-                page = self._make_request_as_human(product_url)
-                soup = HtmlSoup(page)
+        for product_url in product_urls:
+            if len(list(filter(lambda product_: product_.url == product_url, products))) > 0:
+                logging.info('Skipping duplicate product {}'.format(product_url))
+                continue
 
-                product = None
-                try:
-                    product = self.get_product(soup)
+            logging.info('Parsing product from {}'.format(product_url))
 
-                except Exception as exception:
-                    print('Received error: ', exception, traceback.format_exc())
+            page = self._make_request_as_human(product_url)
+            soup = HtmlSoup(page)
 
-                if not product:
-                    continue
+            product = None
+            try:
+                product = self.get_product(soup)
 
-                product.url = product_url
-                products.append(product)
+            except Exception as exception:
+                logging.error('Url: {}. Received error: {}'.format(product_url, exception))
+                db.session.rollback()
 
-                time.sleep(self.SLEEP_PER_REQUEST)
+            if not product:
+                continue
+
+            product.url = product_url
+            products.append(product)
+
+            time.sleep(self.SLEEP_PER_REQUEST)
 
         return products
