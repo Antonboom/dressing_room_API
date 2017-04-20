@@ -12,6 +12,7 @@ from urllib.parse import urlencode, urlparse
 from user_agent import generate_user_agent
 
 from application import db
+from models import Product
 from parsers.utils import HtmlSoup
 
 
@@ -43,8 +44,6 @@ class MarketPlaceCategoryParser:
         """
         :type category: models.Category
         """
-
-        self._visited_urls = []
 
         self._request = request or urllib.request
 
@@ -106,11 +105,13 @@ class MarketPlaceCategoryParser:
         logging.info('Page: {}, product count: {}'.format(page, len(product_urls)))
 
         for product_url in product_urls:
-            if product_url in self._visited_urls:
+            with db.session.no_autoflush:
+                product = Product.query.filter_by(url=product_url).first()
+
+            if product:
                 logging.info('Skipping duplicate product {}'.format(product_url))
                 continue
 
-            self._visited_urls.append(product_url)
             logging.info('Parsing product from {}'.format(product_url))
 
             page = self._make_request_as_human(product_url)

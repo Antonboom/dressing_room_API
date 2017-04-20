@@ -19,3 +19,9 @@ class Color(db.Model):
 
     def __repr__(self):
         return '<Color "{}, #{}">'.format(self.name, self.hex)
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'hex': self.hex
+        }

@@ -41,3 +41,17 @@ class Size(SetFieldsMixin, db.Model):
 
     def __repr__(self):
         return '<Size "Russia: {}, {}">'.format(self.russia, self.international)
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'russia': self.russia,
+            'international': self.international
+        }
+
+    def full_serialize(self):
+        data = super().serialize()
+        data['categories'] = [
+            {'id': category.id, 'name': category.name, 'gender': category.gender} for category in self.categories
+        ]
+        return data

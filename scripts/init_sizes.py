@@ -173,13 +173,13 @@ def _print_table(number=None):
 
 
 def init_sizes():
+    sizes_count = 0
+
     for table_data in tables:
         table_size = table_data['size']
         table = table_data['table']
 
         categories = table_data['categories']
-
-        sizes_count = 0
 
         if categories:
             sizes = [{name: sizes[row] for name, sizes in table.items()} for row in range(table_size)]

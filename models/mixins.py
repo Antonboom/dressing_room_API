@@ -27,3 +27,7 @@ class SetFieldsMixin:
                 'Field "{}" is required for "{}" model'.format(exception.args[0], self.__class__.__name__))
 
         super().__init__(*args, **kwargs)
+
+    def serialize(self):
+        fields = self.required_fields + self.not_required_fields
+        return {field: getattr(self, field) for field in fields if getattr(self, field)}

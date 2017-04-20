@@ -26,7 +26,7 @@ class Category(db.Model):
     lamoda_url = db.Column(db.String(256), nullable=True, unique=True)
 
     products = db.relationship('Product', backref=db.backref('category'))
-    sizes = db.relationship('Size', secondary=category_size, lazy='dynamic')
+    sizes = db.relationship('Size', secondary=category_size, lazy='dynamic', backref=db.backref('categories'))
 
     def __init__(self, name, parent_id, gender, id=None, lamoda_url=None, is_childish=False):
         if id:

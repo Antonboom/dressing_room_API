@@ -112,3 +112,21 @@ class Product(SetFieldsMixin, db.Model):
         photo_url = urljoin(settings.STATIC_URL, 'products') + '/' + photo_file_name
 
         self.photo = photo_url
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'price': self.price,
+            'photo': self.photo,
+            'url': self.url,
+            'description': self.description
+        }
+
+    def full_serialize(self):
+        data = super().serialize()
+
+        data['colors'] = [color.serialize() for color in self.colors]
+        data['sizes'] = [size.serialize() for size in self.sizes]
+
+        return data

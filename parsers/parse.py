@@ -5,13 +5,16 @@ import logging
 
 sys.path.append('.')
 
+from sqlalchemy.sql.elements import and_
+
 import settings
+
 from application import db
 from models import Category, Source
 from parsers.lamoda_parser import LamodaCategoryParser
 
 
-PAGES_COUNT = 10
+PAGES_COUNT = 3
 
 
 logger = logging.getLogger(__name__)
@@ -42,9 +45,25 @@ def _get_or_create_lamoda_source():
     return source
 
 
+def retry(n):
+    def decorator(func):
+        def wrapper(*fargs, **fkwargs):
+            for i in range(n):
+                try:
+                    value = func(*fargs, **fkwargs)
+                    return value
+
+                except Exception:
+                    logging.warning('Try {} №{}'.format(func.__name__, i))
+                    pass
+        return wrapper
+    return decorator
+
+
+@retry(20)
 def lamoda_parsing():
     source = _get_or_create_lamoda_source()
-    categories = Category.query.filter(Category.parent_id.notin_([0, 1000])).all()
+    categories = Category.query.filter(and_(Category.parent_id.notin_([0, 10, 20, 30, 40, 50]), Category.id.notin_([]))).all()
 
     for category in categories:
         logging.info('Parsing category {}'.format(category))
@@ -67,7 +86,7 @@ def lamoda_parsing():
                     db.session.rollback()
                     logger.error('{}: Received parsing top level error: {}'.format(category, exception))
 
-            logger.info('\nFor category "{}" received {} products!'.format(category.name, product_count))
+            logger.info('For category "{}" received {} products!'.format(category, product_count))
 
 
 if __name__ == '__main__':

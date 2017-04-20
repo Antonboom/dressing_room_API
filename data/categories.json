@@ -1,17 +1,8 @@
 [
   {
-    "id": 1000,
-    "name": "Мужская одежда",
-    "parent_id": null,
-    "gender": "male",
-    "is_childish": false,
-    "lamoda_url": "http://www.lamoda.ru/c/477/clothes-muzhskaya-odezhda/"
-  },
-
-  {
     "id": 10,
     "name": "Брюки",
-    "parent_id": 1000,
+    "parent_id": null,
     "gender": "male",
     "is_childish": false,
     "lamoda_url": "http://www.lamoda.ru/c/517/clothes-muzhskie-bryuki/"
@@ -47,7 +38,7 @@
   {
     "id": 20,
     "name": "Верхняя одежда",
-    "parent_id": 1000,
+    "parent_id": null,
     "gender": "male",
     "is_childish": false,
     "lamoda_url": "http://www.lamoda.ru/c/479/clothes-muzhskaya-verkhnyaya-odezhda/"
@@ -74,7 +65,7 @@
   {
     "id": 30,
     "name": "Джемперы и свитеры",
-    "parent_id": 1000,
+    "parent_id": null,
     "gender": "male",
     "is_childish": false,
     "lamoda_url": "http://www.lamoda.ru/c/497/clothes-muzhskoy-trikotazh/"
@@ -110,7 +101,7 @@
   {
     "id": 40,
     "name": "Джинсы",
-    "parent_id": 1000,
+    "parent_id": null,
     "gender": "male",
     "is_childish": false,
     "lamoda_url": "http://www.lamoda.ru/c/513/clothes-muzhskie-d-insy/"
@@ -137,7 +128,7 @@
   {
     "id": 50,
     "name": "Майки",
-    "parent_id": 1000,
+    "parent_id": null,
     "gender": "male",
     "is_childish": false,
     "lamoda_url": "http://www.lamoda.ru/c/3039/clothes-topyi-muzhskie/"
@@ -164,7 +155,7 @@
   {
     "id": 60,
     "name": "Нижнее белье",
-    "parent_id": 1000,
+    "parent_id": null,
     "gender": "male",
     "is_childish": false,
     "lamoda_url": "http://www.lamoda.ru/c/523/clothes-muzhskoe-nizhneye-belyo/"
@@ -191,7 +182,7 @@
   {
     "id": 70,
     "name": "Плавки и шорты для плавания",
-    "parent_id": 1000,
+    "parent_id": null,
     "gender": "male",
     "is_childish": false,
     "lamoda_url": "http://www.lamoda.ru/c/2526/clothes-plyazhnaya-odezhda/"
@@ -218,7 +209,7 @@
   {
     "id": 80,
     "name": "Рубашки",
-    "parent_id": 1000,
+    "parent_id": null,
     "gender": "male",
     "is_childish": false,
     "lamoda_url": "http://www.lamoda.ru/c/515/clothes-muzhskie-rubashki-i-sorochki/"
@@ -254,7 +245,7 @@
   {
     "id": 90,
     "name": "Мужские толстовки и олимпийки",
-    "parent_id": 1000,
+    "parent_id": null,
     "gender": "male",
     "is_childish": false,
     "lamoda_url": "http://www.lamoda.ru/c/2508/clothes-tolstovki-i-olimpiyki/"
@@ -299,7 +290,7 @@
   {
     "id": 100,
     "name": "Футболки и поло",
-    "parent_id": 1000,
+    "parent_id": null,
     "gender": "male",
     "is_childish": false,
     "lamoda_url": "http://www.lamoda.ru/c/2512/clothes-muzhskie-futbolki/"
@@ -344,7 +335,7 @@
   {
     "id": 110,
     "name": "Шорты",
-    "parent_id": 1000,
+    "parent_id": null,
     "gender": "male",
     "is_childish": false,
     "lamoda_url": "http://www.lamoda.ru/c/519/clothes-muzhskie-shorty/"
