@@ -9,7 +9,7 @@ STATIC_PATH = '/www/droom_backend/static'
 STATIC_URL = 'http://cache.mydressing.ru/'
 
 HOST = '0.0.0.0'
-PORT = 8080
+PORT = 8081
 
 SECRET_KEY = ''
 
