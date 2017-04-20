@@ -55,6 +55,9 @@ def main():
 
 
 def gunicorn():
+    from admin import init_admin
+    init_admin(app)
+
     return app
 
 
