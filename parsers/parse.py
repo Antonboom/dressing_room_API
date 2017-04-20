@@ -63,7 +63,7 @@ def retry(n):
 @retry(20)
 def lamoda_parsing():
     source = _get_or_create_lamoda_source()
-    categories = Category.query.filter(and_(Category.parent_id.notin_([0, 10, 20, 30, 40, 50]), Category.id.notin_([]))).all()
+    categories = Category.query.filter(and_(Category.parent_id.notin_([0, 10, 20, 30, 40, 50, 60, 70, 80, 90]), Category.id.notin_([101, 102, 103]))).all()
 
     for category in categories:
         logging.info('Parsing category {}'.format(category))
