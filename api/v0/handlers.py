@@ -24,7 +24,7 @@ def _make_error(message):
 
 @api.route('/', methods=('GET',))
 def hello_from_API():
-    return 'Hello from dressing room API'
+    return 'OK'
 
 
 @api.route('/category/<int:category_id>', methods=('GET',))
@@ -49,7 +49,7 @@ def get_categories():
     return _json_list(categories)
 
 
-@api.route('/category/<int:category_id>/childrens', methods=('GET',))
+@api.route('/category/<int:category_id>/children', methods=('GET',))
 def get_category_childrens(category_id):
     category = m.Category.query.get(category_id)
 
