@@ -1,15 +1,20 @@
 # -*- coding: utf-8 -*-
 
+import os
+
 import flask_admin
 import flask_login
 
+from flask.ext.admin.form import ImageUploadField
 from flask_admin.contrib import sqla
 from flask_admin import expose, helpers
 from flask import redirect, url_for, request
 from markupsafe import Markup
 
+import settings
 from admin.forms import LoginForm
 from admin import utils
+from admin.utils import get_photo_filename
 
 
 class AdminIndexView(flask_admin.AdminIndexView):
@@ -69,4 +74,13 @@ class ProductView(ModelView):
         'description': _description_formatter,
         'photo': _photo_formatter,
         'url': _url_formatter
+    }
+
+    form_overrides = {'uv_card': ImageUploadField}
+    form_args = {
+        'uv_card': dict(
+            base_path=os.path.join(settings.STATIC_PATH, 'images', 'products', 'uv_card'),
+            namegen=get_photo_filename,
+            allowed_extensions=('jpg', 'jpeg', 'png'),
+        )
     }

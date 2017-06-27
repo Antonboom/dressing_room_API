@@ -10,7 +10,6 @@ from sqlalchemy.sql.elements import and_
 import models as m
 from api import JsonResponse
 
-
 api = Blueprint('api_v0', __name__)
 
 
@@ -23,7 +22,7 @@ def _make_error(message):
 
 
 @api.route('/', methods=('GET',))
-def hello_from_API():
+def hello_from_api():
     return 'OK'
 
 
@@ -109,3 +108,9 @@ def get_size(size_id):
         return JsonResponse(_make_error('Size not found'), status=404)
 
     return JsonResponse(size.full_serialize())
+
+
+@api.route('/uv_card', methods=('GET',))
+def get_uvcard():
+    pid = request.args.get('pid', []).split(',')
+    return 'ok'

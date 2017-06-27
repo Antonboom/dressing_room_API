@@ -1,5 +1,12 @@
 # -*- coding: utf-8 -*-
 
+import hashlib
+from urllib.parse import urljoin
+
+from werkzeug.utils import secure_filename
+
+import settings
+
 
 def ellipsis(text, limit=50):
     """
@@ -10,3 +17,11 @@ def ellipsis(text, limit=50):
         return text
 
     return text[:limit - 3] + '...'
+
+
+def get_photo_filename(obj, file_data):
+    return (
+        urljoin(settings.STATIC_URL, 'products') +
+        '/' +
+        hashlib.sha256(secure_filename(file_data.filename).encode('utf-8')).hexdigest()
+    )
