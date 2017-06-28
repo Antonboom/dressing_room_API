@@ -20,8 +20,8 @@ def ellipsis(text, limit=50):
 
 
 def get_photo_filename(obj, file_data):
-    return (
-        urljoin(settings.STATIC_URL, 'products') +
-        '/' +
-        hashlib.sha256(secure_filename(file_data.filename).encode('utf-8')).hexdigest()
-    )
+    return hashlib.sha256(secure_filename(file_data.filename).encode('utf-8')).hexdigest()
+
+
+def get_photo_thumbname(filename):
+    return filename

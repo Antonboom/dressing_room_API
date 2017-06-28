@@ -8,7 +8,7 @@ from wand.image import Image
 class UVcardPart:
 
     def __init__(self, image_filepath, width, height, left, top):
-        self._image = Image(image_filepath)
+        self._image = Image(filename=image_filepath)
 
         self._width = width
         self._height = height

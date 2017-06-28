@@ -3,12 +3,18 @@
 from flask import (
     Blueprint,
     request,
+    make_response
 )
 
 from sqlalchemy.sql.elements import and_
 
 import models as m
 from api import JsonResponse
+from uv_card.processing import (
+    UVcardPart,
+    UVcard
+)
+
 
 api = Blueprint('api_v0', __name__)
 
@@ -78,8 +84,13 @@ def get_category_products(category_id):
 
     results_per_page = int(request.args.get('results_per_page', 30))
     page = int(request.args.get('page', 1))
+    with_uv_card = bool(request.args.get('with_uv_card', False))
 
-    products = category.products[results_per_page * page: results_per_page * (page + 1)]
+    products = category.products
+    if with_uv_card:
+        products = list(filter(lambda product: product.uv_card, category.products))
+
+    products = products[results_per_page * (page - 1): results_per_page * page]
 
     response = {
         'page': page,
@@ -112,5 +123,43 @@ def get_size(size_id):
 
 @api.route('/uv_card', methods=('GET',))
 def get_uvcard():
-    pid = request.args.get('pid', []).split(',')
-    return 'ok'
+    pid = request.args.get('pid', '')
+
+    if not pid:
+        return JsonResponse(_make_error('No "pid" argument'), status=400)
+
+    pid = pid.split(',')
+
+    # categories: (width, height, left, top)
+    categories_part_params_map = {
+        (10, 40, 60, 70, 110):     (450, 669, 0, 355),  # Нижняя одежда
+        (20, 30, 50, 80, 90, 100): (1024, 355, 0, 0),   # Верхняя одежда
+    }
+
+    parts = []
+
+    for product_id in pid:
+        product = m.Product.query.get(product_id)
+
+        if product is None:
+            return JsonResponse(_make_error('Product with id="{}" not found'.format(product_id)), status=404)
+
+        category = product.category
+        while category.parent:
+            category = category.parent
+
+        params = None
+        for categories, part_params in categories_part_params_map.items():
+            if category.id in categories:
+                params = part_params
+                continue
+
+        if params is None:
+            return JsonResponse(_make_error('No part params for category with id="{}"'.format(category.id)), status=404)
+
+        parts.append(UVcardPart(product.uv_card_path, *params))
+
+    card = UVcard(*parts)
+    response = make_response(card.make_blob())
+    response.headers['Content-Type'] = 'image/jpeg'
+    return response

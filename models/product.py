@@ -88,6 +88,9 @@ class Product(SetFieldsMixin, db.Model):
         'sleeve_length',
     )
 
+    BASE_PHOTO_PATH = os.path.join(settings.STATIC_PATH, 'images', 'products', 'photo')
+    BASE_UV_CARD_PATH = os.path.join(settings.STATIC_PATH, 'images', 'products', 'uv_card')
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
@@ -96,7 +99,7 @@ class Product(SetFieldsMixin, db.Model):
 
     def set_photo(self, photo_url):
         photo_file_name = hashlib.sha256(photo_url.encode('utf-8')).hexdigest() + '.jpeg'
-        photo_path = os.path.join(settings.STATIC_PATH, 'images', 'products', 'photo', photo_file_name)
+        photo_path = os.path.join(self.BASE_PHOTO_PATH, photo_file_name)
 
         logging.debug('Loading product photo from {}'.format(photo_url))
 
@@ -109,16 +112,29 @@ class Product(SetFieldsMixin, db.Model):
 
         logging.debug('Save product photo to {}'.format(photo_path))
 
-        photo_url = urljoin(settings.STATIC_URL, 'products') + '/' + photo_file_name
+        self.photo = photo_file_name
 
-        self.photo = photo_url
+    @property
+    def photo_url(self):
+        if self.photo.startswith('http'):
+            return self.photo
+        return urljoin(settings.STATIC_URL, 'products') + '/' + self.photo
+
+    @property
+    def uv_card_url(self):
+        return urljoin(settings.STATIC_URL, 'uv_card') + '/' + self.uv_card if self.uv_card else ''
+
+    @property
+    def uv_card_path(self):
+        return os.path.join(self.BASE_UV_CARD_PATH, self.uv_card)
 
     def serialize(self):
         return {
             'id': self.id,
             'name': self.name,
             'price': self.price,
-            'photo': self.photo,
+            'photo': self.photo_url,
+            'uv_card': self.uv_card_url,
             'url': self.url,
             'description': self.description
         }
