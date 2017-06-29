@@ -75,4 +75,4 @@ logs/
 *.log
 local_settings.py
 configs
-static
+static/
