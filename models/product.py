@@ -126,7 +126,7 @@ class Product(SetFieldsMixin, db.Model):
 
     @property
     def uv_card_path(self):
-        return os.path.join(self.BASE_UV_CARD_PATH, self.uv_card)
+        return os.path.join(self.BASE_UV_CARD_PATH, self.uv_card) if self.uv_card else ''
 
     def serialize(self):
         return {
