@@ -104,6 +104,10 @@ class ProductView(ModelView):
         'source'
     ]
 
+    column_searchable_list = [
+        'id', 'name', 'category'
+    ]
+
     column_formatters = {
         'description': _description_formatter,
         'photo': _photo_formatter,
