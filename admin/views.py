@@ -105,7 +105,7 @@ class ProductView(ModelView):
     ]
 
     column_searchable_list = [
-        'id', 'name', 'category'
+        'id', 'name'
     ]
 
     column_formatters = {
