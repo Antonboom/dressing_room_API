@@ -157,6 +157,9 @@ def get_uvcard():
         if params is None:
             return JsonResponse(_make_error('No part params for category with id="{}"'.format(category.id)), status=404)
 
+        if not product.uv_card_path:
+            return JsonResponse(_make_error('No uv-card for product with id="{}"'.format(product_id)), status=404)
+
         parts.append(UVcardPart(product.uv_card_path, *params))
 
     card = UVcard(*parts)
