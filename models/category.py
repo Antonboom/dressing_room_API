@@ -41,6 +41,10 @@ class Category(db.Model):
     def __repr__(self):
         return '<Category {} "{}">'.format(self.id, self.name)
 
+    @classmethod
+    def top_level(cls):
+        return cls.query.filter(cls.parent_id.is_(None)).all()
+
     def serialize(self):
         return {
             'id': self.id,

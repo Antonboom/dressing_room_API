@@ -10,10 +10,20 @@
                 <p class="lead">
                     Вас приветствует админка невъебенного сервиса.
                 </p>
+                {% for category in categories %}
+                <h4>{{ category.name }}</h4>
+                    <ul>
+                        {%  for children_category in category.childrens %}
+                            <li><a href="/noadmin/product/?flt1_0={{ children_category.id }}">{{ children_category.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                {% endfor %}
                 <br>
                 <button class="btn btn-danger">
                     <a href="{{ url_for('admin.logout_view') }}" style="color: white">Log out</a>
                 </button>
+                <br>
+                <br>
             {% else %}
                 <form method="POST" action="" style="max-width: 300px;">
                     {{ form.hidden_tag() if form.hidden_tag }}

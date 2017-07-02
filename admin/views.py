@@ -25,8 +25,12 @@ class AdminIndexView(flask_admin.AdminIndexView):
 
     @expose('/')
     def index(self):
+        from models.category import Category
+
         if not flask_login.current_user.is_authenticated:
             return redirect(url_for('.login_view'))
+
+        self._template_args['categories'] = Category.top_level()
 
         return super().index()
 
@@ -106,6 +110,10 @@ class ProductView(ModelView):
 
     column_searchable_list = [
         'id', 'name'
+    ]
+
+    column_filters = [
+        'id', 'category_id', 'gender', 'is_childish'
     ]
 
     column_formatters = {
