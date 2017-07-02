@@ -128,6 +128,13 @@ class Product(SetFieldsMixin, db.Model):
     def uv_card_path(self):
         return os.path.join(self.BASE_UV_CARD_PATH, self.uv_card) if self.uv_card else ''
 
+    @property
+    def top_level_category_id(self):
+        category = self.category
+        while category.parent:
+            category = category.parent
+        return category.id
+
     def serialize(self):
         return {
             'id': self.id,
@@ -136,13 +143,15 @@ class Product(SetFieldsMixin, db.Model):
             'photo': self.photo_url,
             'uv_card': self.uv_card_url,
             'url': self.url,
-            'description': self.description
+            'description': self.description,
+            'category': self.category_id
         }
 
     def full_serialize(self):
-        data = super().serialize()
+        data = self.serialize()
 
         data['colors'] = [color.serialize() for color in self.colors]
         data['sizes'] = [size.serialize() for size in self.sizes]
+        data['top_level_category'] = self.top_level_category_id
 
         return data

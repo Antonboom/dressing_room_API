@@ -19,6 +19,9 @@ from uv_card.processing import (
 api = Blueprint('api_v0', __name__)
 
 
+GENDERS = ('male', 'female')
+
+
 def _json_list(serializable_sequence, full=False):
     return JsonResponse([item.full_serialize() if full else item.serialize() for item in serializable_sequence])
 
@@ -44,10 +47,8 @@ def get_category(category_id):
 
 @api.route('/categories', methods=('GET',))
 def get_categories():
-    genders = ('male', 'female')
-
     gender = request.args.get('gender')
-    if gender not in genders:
+    if gender not in GENDERS:
         return JsonResponse(_make_error('No gender specified'), status=400)
 
     categories = m.Category.query.filter(and_(m.Category.parent_id.is_(None), m.Category.gender == gender)).all()
@@ -97,6 +98,33 @@ def get_category_products(category_id):
         'count': len(products),
         'products': [product.serialize() for product in products]
     }
+
+    return JsonResponse(response)
+
+
+@api.route('/products', methods=('GET',))
+def get_products():
+    gender = request.args.get('gender', None)
+    results_per_page = int(request.args.get('results_per_page', 30))
+    page = int(request.args.get('page', 1))
+    get_all = bool(request.args.get('all', False))
+
+    _filter = m.Product.uv_card.isnot(None)
+    if gender:
+        _filter = and_(_filter, m.Product.gender == gender)
+
+    if get_all:
+        products = m.Product.query.filter(_filter).all()
+    else:
+        products = m.Product.query.filter(_filter).limit(results_per_page).offset(results_per_page * (page - 1)).all()
+
+    response = {
+        'products': [product.full_serialize() for product in products],
+        'count': len(products)
+    }
+
+    if not get_all:
+        response['page'] = page
 
     return JsonResponse(response)
 
