@@ -14,7 +14,7 @@
                 <h4>{{ category.name }}</h4>
                     <ul>
                         {%  for children_category in category.childrens %}
-                            <li><a href="/noadmin/product/?flt1_0={{ children_category.id }}">{{ children_category.name }}</a></li>
+                            <li><a href="/noadmin/product/?flt2_7={{ children_category.id }}">{{ children_category.name }}</a></li>
                         {% endfor %}
                     </ul>
                 {% endfor %}
