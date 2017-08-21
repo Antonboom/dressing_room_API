@@ -25,6 +25,7 @@ sudo service supervisor restart droom_api
 #### Database
 ```bash
 export FLASK_APP=application.py
+export MAGICK_HOME=/usr/local/Cellar/imagemagick@6/6.9.9-3
 flask db init                       # If first time
 flask db migrate                    # And check the changes
 flask db upgrade
