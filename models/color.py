@@ -12,6 +12,8 @@ class Color(db.Model):
     hex = db.Column(db.String(32))
     rgb = db.Column(db.String(32))
 
+    color_ratios = db.relationship('ClothingColorRatio', backref=db.backref('color'))
+
     def __init__(self, name, hex=None, rgb=None):
         self.name = name
         self.hex = hex

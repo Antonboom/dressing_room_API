@@ -194,3 +194,26 @@ def get_uvcard():
     response = make_response(card.make_blob())
     response.headers['Content-Type'] = 'image/jpeg'
     return response
+
+
+@api.route('/fashion', methods=('GET',))
+def get_fashion():
+    pid = request.args.get('pid', '')
+
+    if not pid:
+        return JsonResponse(_make_error('No "pid" argument'), status=400)
+
+    pids = pid.split(',')
+
+    current_seasons = m.FashionSeason.query.filter(m.FashionSeason.is_active.is_(True)).all()
+    suitable_seasons = []
+
+    for season in current_seasons:
+        percent = season.get_compatibility_percentage(pids)
+        if percent:
+            suitable_seasons.append({
+                'season': season.serialize(pids),
+                'compatibility': percent
+            })
+
+    return JsonResponse(suitable_seasons)

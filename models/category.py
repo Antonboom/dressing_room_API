@@ -18,7 +18,7 @@ class Category(db.Model):
     name = db.Column(db.String(128), nullable=False)
 
     parent_id = db.Column(db.Integer, db.ForeignKey('category.id'))
-    childrens = db.relationship('Category', backref=db.backref('parent', remote_side=id), cascade="delete")
+    childrens = db.relationship('Category', backref=db.backref('parent', remote_side=id), cascade='delete')
 
     gender = db.Column(db.String(64), nullable=False)
     is_childish = db.Column(db.Boolean, default=False)
@@ -27,6 +27,8 @@ class Category(db.Model):
 
     products = db.relationship('Product', backref=db.backref('category'))
     sizes = db.relationship('Size', secondary=category_size, lazy='dynamic', backref=db.backref('categories'))
+
+    color_ratios = db.relationship('ClothingColorRatio', backref=db.backref('category'))
 
     def __init__(self, name, parent_id, gender, id=None, lamoda_url=None, is_childish=False):
         if id:
@@ -53,5 +55,18 @@ class Category(db.Model):
             'gender': self.gender,
             'is_childish': self.is_childish,
             'childrens': len(self.childrens),
-            'products': len(self.products),
+            'products': len(self.products)
         }
+
+    def is_childish_of(self, other_category):
+        """
+        Является ли эта категория дочерней для другой категории
+        """
+
+        category = self
+        while category.parent:
+            if category.parent == other_category:
+                return True
+            category = category.parent
+
+        return False
