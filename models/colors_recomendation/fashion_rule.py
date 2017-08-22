@@ -42,9 +42,20 @@ class FashionRule(db.Model):
                     ratios_usage[color_ratio.id] += 1
 
         ratios_count = len(self.color_ratios)
-        ratios_usage_count = len(list(filter(lambda ratio, usage_count: usage_count != 0, ratios_usage.items())))
+        ratios_usage_count = len(list(filter(lambda item: item[1] != 0, ratios_usage.items())))
 
         products_count = len(pids)
-        products_usage_count = len(list(filter(lambda product, usage_count: usage_count != 0, products_usage.items())))
+        products_usage_count = len(list(filter(lambda item: item[1] != 0, products_usage.items())))
 
         return (ratios_usage_count / ratios_count + products_usage_count / products_count) / 2.
+
+    def serialize(self, pids=None):
+        data = {
+            'name': self.name,
+            'is_active': self.is_active
+        }
+
+        if pids:
+            data['compatibility'] = round(self.get_compatibility_percentage(pids), 4)
+
+        return data

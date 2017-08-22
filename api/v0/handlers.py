@@ -203,13 +203,17 @@ def get_fashion():
     if not pid:
         return JsonResponse(_make_error('No "pid" argument'), status=400)
 
-    pid = pid.split(',')
+    pids = pid.split(',')
 
     current_seasons = m.FashionSeason.query.filter(m.FashionSeason.is_active.is_(True)).all()
+    suitable_seasons = []
 
+    for season in current_seasons:
+        percent = season.get_compatibility_percentage(pids)
+        if percent:
+            suitable_seasons.append({
+                'season': season.serialize(pids),
+                'compatibility': percent
+            })
 
-    print(current_seasons)
-    for product_id in pid:
-        pass
-
-    return JsonResponse('OK')
+    return JsonResponse(suitable_seasons)

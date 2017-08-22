@@ -163,7 +163,7 @@ class Product(SetFieldsMixin, db.Model):
         :type color_ratio: ClothingColorRatio
         """
 
-        is_my_category = (color_ratio.category == self.category) or self.category.is_childish(color_ratio.category)
+        is_my_category = (color_ratio.category == self.category) or self.category.is_childish_of(color_ratio.category)
         is_my_color = color_ratio.color in self.colors
 
         return is_my_category and is_my_color
