@@ -155,3 +155,15 @@ class Product(SetFieldsMixin, db.Model):
         data['top_level_category'] = self.top_level_category_id
 
         return data
+
+    def is_fits_color_ratio(self, color_ratio):
+        """
+        Подходит ли цветовому соотношению.
+
+        :type color_ratio: ClothingColorRatio
+        """
+
+        is_my_category = (color_ratio.category == self.category) or self.category.is_childish(color_ratio.category)
+        is_my_color = color_ratio.color in self.colors
+
+        return is_my_category and is_my_color

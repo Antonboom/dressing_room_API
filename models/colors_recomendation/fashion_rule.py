@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import models as m
 from application import db
 
 
@@ -19,5 +20,31 @@ class FashionRule(db.Model):
     name = db.Column(db.String(256), nullable=False)
     is_active = db.Column(db.Boolean, default=True)
 
-    season_id = db.Column(db.Integer, db.ForeignKey('fashion_season.id'))
+    season_id = db.Column(db.Integer, db.ForeignKey('fashion_season.id'), nullable=False)
     color_ratios = db.relationship('ClothingColorRatio', secondary=rule_color_ratio, backref=db.backref('rules', lazy='dynamic'))
+
+    def __repr__(self):
+        return '<Правило моды {} "{}">'.format(self.id, self.name)
+
+    def get_compatibility_percentage(self, pids):
+        """
+        :type pids: (list|tuple)
+        """
+
+        ratios_usage = dict.fromkeys([ratio.id for ratio in self.color_ratios], 0)
+        products_usage = dict.fromkeys(pids, 0)
+
+        for product_id in pids:
+            product = m.Product.query.get(product_id)
+            for color_ratio in self.color_ratios:
+                if product.is_fits_color_ratio(color_ratio):
+                    products_usage[product_id] += 1
+                    ratios_usage[color_ratio.id] += 1
+
+        ratios_count = len(self.color_ratios)
+        ratios_usage_count = len(list(filter(lambda ratio, usage_count: usage_count != 0, ratios_usage.items())))
+
+        products_count = len(pids)
+        products_usage_count = len(list(filter(lambda product, usage_count: usage_count != 0, products_usage.items())))
+
+        return (ratios_usage_count / ratios_count + products_usage_count / products_count) / 2.

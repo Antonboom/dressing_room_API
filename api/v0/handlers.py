@@ -194,3 +194,22 @@ def get_uvcard():
     response = make_response(card.make_blob())
     response.headers['Content-Type'] = 'image/jpeg'
     return response
+
+
+@api.route('/fashion', methods=('GET',))
+def get_fashion():
+    pid = request.args.get('pid', '')
+
+    if not pid:
+        return JsonResponse(_make_error('No "pid" argument'), status=400)
+
+    pid = pid.split(',')
+
+    current_seasons = m.FashionSeason.query.filter(m.FashionSeason.is_active.is_(True)).all()
+
+
+    print(current_seasons)
+    for product_id in pid:
+        pass
+
+    return JsonResponse('OK')
