@@ -9,6 +9,8 @@ from flask import (
 from sqlalchemy.sql.elements import and_
 
 import models as m
+
+from application import db
 from api import JsonResponse
 from uv_card.processing import (
     UVcardPart,
@@ -217,3 +219,46 @@ def get_fashion():
             })
 
     return JsonResponse(suitable_seasons)
+
+
+@api.route('/recommendation/auth', methods=('GET',))
+def get_user_session():
+    user_session = m.UserSession()
+
+    db.session.add(user_session)
+    db.session.commit()
+
+    return JsonResponse({'session': user_session.uid})
+
+
+@api.route('/recommendation/action', methods=('POST',))
+def send_user_action():
+    post_data = request.get_json() or {}
+
+    session_id = post_data.get('session')
+    if not session_id:
+        return JsonResponse(_make_error('No "session" specified'), status=400)
+
+    product_id = int(post_data.get('product', 0))
+    if not product_id:
+        return JsonResponse(_make_error('No "product" specified'), status=400)
+
+    action = post_data.get('action')
+    if not action:
+        return JsonResponse(_make_error('No "action" specified'), status=400)
+    if action not in m.UserAction.AVAILABLE_ACTIONS:
+        return JsonResponse(_make_error('Available actions: {}'.format(m.UserAction.AVAILABLE_ACTIONS)), status=400)
+
+    session = m.UserSession.query.filter_by(uid=session_id).first()
+    if session is None:
+        return JsonResponse(_make_error('Session "{}" not found'.format(session_id)), status=404)
+
+    product = m.Product.query.get(product_id)
+    if product is None:
+        return JsonResponse(_make_error('Product with id="{}" not found'.format(product_id)), status=404)
+
+    user_action = m.UserAction(session_id=session.id, product_id=product_id, action=action)
+    db.session.add(user_action)
+    db.session.commit()
+
+    return JsonResponse(user_action.serialize())

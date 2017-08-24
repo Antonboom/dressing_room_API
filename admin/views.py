@@ -1,18 +1,20 @@
 # -*- coding: utf-8 -*-
 
 import os
+
 from urllib.parse import urljoin
 
 import flask_admin
 import flask_login
 
-from flask.ext.admin.form import ImageUploadField, ImageUploadInput
-from flask_admin.contrib import sqla
 from flask_admin import expose, helpers
+from flask_admin.form import ImageUploadField, ImageUploadInput
+from flask_admin.contrib import sqla
 from flask import redirect, url_for, request
 from markupsafe import Markup
 
 import settings
+
 from admin.forms import LoginForm
 from admin import utils
 from admin.utils import get_photo_filename, get_photo_thumbname

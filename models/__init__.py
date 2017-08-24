@@ -7,7 +7,10 @@ from .source import Source
 from .size import Size
 
 from . import colors_recomendation
+from . import product_recomendation
+
 from .colors_recomendation import *
+from .product_recomendation import *
 
 
 __all__ = [
@@ -19,3 +22,4 @@ __all__ = [
 ]
 
 __all__ += colors_recomendation.__all__
+__all__ += product_recomendation.__all__

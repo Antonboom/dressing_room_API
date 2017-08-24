@@ -52,6 +52,8 @@ class Product(SetFieldsMixin, db.Model):
 
     sizes = db.relationship('Size', secondary=product_size, backref=db.backref('products', lazy='dynamic'))
 
+    user_actions = db.relationship('UserAction', backref=db.backref('product'))
+
     # Брюки
     height = db.Column(db.SmallInteger)                      # Высота
     inner_seam_length = db.Column(db.SmallInteger)           # Длина по внутреннему шву
