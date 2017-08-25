@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
 
+import random
+
 from flask import (
     Blueprint,
     request,
     make_response
 )
-
+from sqlalchemy import desc
+from sqlalchemy.orm import joinedload
 from sqlalchemy.sql.elements import and_
 
 import models as m
@@ -19,9 +22,6 @@ from uv_card.processing import (
 
 
 api = Blueprint('api_v0', __name__)
-
-
-GENDERS = ('male', 'female')
 
 
 def _json_list(serializable_sequence, full=False):
@@ -50,7 +50,7 @@ def get_category(category_id):
 @api.route('/categories', methods=('GET',))
 def get_categories():
     gender = request.args.get('gender')
-    if gender not in GENDERS:
+    if gender not in m.Product.GENDERS:
         return JsonResponse(_make_error('No gender specified'), status=400)
 
     categories = m.Category.query.filter(and_(m.Category.parent_id.is_(None), m.Category.gender == gender)).all()
@@ -262,3 +262,65 @@ def send_user_action():
     db.session.commit()
 
     return JsonResponse(user_action.serialize())
+
+
+@api.route('/recommendation', methods=('GET',))
+def get_recommendation():
+    session_uid = request.args.get('session', '')
+
+    if not session_uid:
+        return JsonResponse(_make_error('No "session" argument'), status=400)
+
+    default_products_count = 10
+    products_count = int(request.args.get('count', default_products_count))
+
+    actions = m.UserAction.query.join(m.UserSession)\
+        .options(joinedload(m.UserAction.product))\
+        .filter(and_(m.UserAction.action == m.UserAction.ACTION_VIEW, m.UserSession.uid == session_uid))\
+        .order_by(desc(m.UserAction.created_at))\
+        .limit(products_count)\
+        .all()
+
+    categories = [action.product.category_id for action in actions]
+    categories_count = len(categories)
+
+    categories_percentage = {}
+    for category_id in categories:
+        if category_id not in categories_percentage:
+            categories_percentage[category_id] = round(categories.count(category_id) / categories_count, 4)
+
+    categories_percentage = sorted(categories_percentage.items(), key=lambda item: -item[1])
+
+    categories_products_count = {}
+    tmp_products_count = products_count
+    for category_id, percent in categories_percentage:
+        count = percent * products_count
+
+        if count:
+            count = 1 if 0 < count < 0.1 else int(count)
+
+            categories_products_count[category_id] = count
+            tmp_products_count -= count
+            if tmp_products_count <= 0:
+                break
+        else:
+            break
+
+    products = []
+    for category_id, count in categories_products_count.items():
+        # TODO: Разгрузить БД
+        category_products = m.Category.query.get(category_id).products
+        products.extend(random.choice(category_products) for _ in range(count))
+
+    resulting_count = len(products)
+    if resulting_count < products_count:
+        products.extend([
+            # TODO: Разгрузить БД, убрать магические числа
+            random.choice(m.Product.query.limit(1000).offset(random.choice(2000)).all())
+            for _ in range(products_count - resulting_count)
+        ])
+
+    return JsonResponse({
+        'session': session_uid,
+        'products': [product.serialize() for product in products]
+    })

@@ -32,7 +32,7 @@ class UserAction(db.Model):
         return {
             'id': self.id,
             'session': self.session.uid,
-            'product': self.product_id,
+            'product': {'id': self.product.id, 'name': self.product.name},
             'action': self.action,
             'created_at': self.created_at.timestamp()
         }

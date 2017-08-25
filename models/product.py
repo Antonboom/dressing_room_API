@@ -34,6 +34,10 @@ class Product(SetFieldsMixin, db.Model):
 
     __table_name__ = 'product'
 
+    GENDER_MALE = 'male'
+    GENDER_FEMALE = 'female'
+    GENDERS = (GENDER_MALE, GENDER_FEMALE)
+
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(128), nullable=False)
     price = db.Column(db.Integer, nullable=False)
