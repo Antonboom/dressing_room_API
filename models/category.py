@@ -14,6 +14,18 @@ class Category(db.Model):
 
     __tablename__ = 'category'
 
+    NO_SKIN_TYPE = '00'
+    SKIN_TYPES = (
+        ('00', 'Отсутствует'),
+        ('01', 'Рубашка заправляемая'),
+        ('02', 'Рубашка незаправляемая'),
+        ('03', 'Джинсы с ремнём'),
+        ('04', 'Джинсы без ремня'),
+        ('05', 'Классические брюки'),
+        ('06', 'Футболка'),
+        ('07', 'Пиджак'),
+    )
+
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(128), nullable=False)
 
@@ -29,6 +41,8 @@ class Category(db.Model):
     sizes = db.relationship('Size', secondary=category_size, lazy='dynamic', backref=db.backref('categories'))
 
     color_ratios = db.relationship('ClothingColorRatio', backref=db.backref('category'))
+
+    skin_type = db.Column(db.String(64), nullable=True, default=None)
 
     def __init__(self, name, parent_id, gender, id=None, lamoda_url=None, is_childish=False):
         if id:
@@ -54,6 +68,7 @@ class Category(db.Model):
             'parent_id': self.parent_id,
             'gender': self.gender,
             'is_childish': self.is_childish,
+            'skin_type': self.skin_type or self.NO_SKIN_TYPE,
             'childrens': len(self.childrens),
             'products': len(self.products)
         }

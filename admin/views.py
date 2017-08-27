@@ -146,3 +146,30 @@ class ProductView(ModelView):
             url_relative_path=urljoin(settings.STATIC_URL, 'uv_card/')
         ),
     }
+
+    form_choices = {
+        'gender': [
+            ('male', 'Мужской'),
+            ('female', 'Женский')
+        ]
+    }
+
+
+class CategoryView(ModelView):
+
+    form_choices = {
+        'gender': [
+            ('male', 'Мужской'),
+            ('female', 'Женский')
+        ],
+        'skin_type': [
+            ('00', 'Отсутствует'),
+            ('01', 'Рубашка заправляемая'),
+            ('02', 'Рубашка незаправляемая'),
+            ('03', 'Джинсы с ремнём'),
+            ('04', 'Джинсы без ремня'),
+            ('05', 'Классические брюки'),
+            ('06', 'Футболка'),
+            ('07', 'Пиджак')
+        ]
+    }

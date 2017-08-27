@@ -10,6 +10,7 @@ from urllib.parse import urljoin
 import settings
 
 from application import db
+from models import Category
 from models.mixins import SetFieldsMixin
 
 
@@ -141,6 +142,13 @@ class Product(SetFieldsMixin, db.Model):
             category = category.parent
         return category.id
 
+    @property
+    def skin(self):
+        category = self.category
+        while not category.skin_type and category.parent:
+            category = category.parent
+        return category.skin_type or Category.NO_SKIN_TYPE
+
     def serialize(self):
         return {
             'id': self.id,
@@ -150,7 +158,8 @@ class Product(SetFieldsMixin, db.Model):
             'uv_card': self.uv_card_url,
             'url': self.url,
             'description': self.description,
-            'category': self.category_id
+            'category': self.category_id,
+            'skin_type': self.skin
         }
 
     def full_serialize(self):
