@@ -20,7 +20,7 @@ def ellipsis(text, limit=50):
 
 
 def get_photo_filename(obj, file_data):
-    return hashlib.sha256(secure_filename(file_data.filename).encode('utf-8')).hexdigest()
+    return hashlib.sha256(secure_filename(file_data.filename).encode('utf-8')).hexdigest() + '.jpeg'
 
 
 def get_photo_thumbname(filename):
