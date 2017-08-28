@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import hashlib
+import time
 from urllib.parse import urljoin
 
 from werkzeug.utils import secure_filename
@@ -20,7 +21,9 @@ def ellipsis(text, limit=50):
 
 
 def get_photo_filename(obj, file_data):
-    return hashlib.sha256(secure_filename(file_data.filename).encode('utf-8')).hexdigest() + '.jpeg'
+    return hashlib.sha256(
+        secure_filename(file_data.filename + str(int(time.time()))).encode('utf-8')
+    ).hexdigest() + '.png'
 
 
 def get_photo_thumbname(filename):

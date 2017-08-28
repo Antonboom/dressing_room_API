@@ -194,7 +194,7 @@ def get_uvcard():
 
     card = UVcard(*parts)
     response = make_response(card.make_blob())
-    response.headers['Content-Type'] = 'image/jpeg'
+    response.headers['Content-Type'] = 'image/png'
     return response
 
 

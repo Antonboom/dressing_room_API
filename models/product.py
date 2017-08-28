@@ -105,7 +105,7 @@ class Product(SetFieldsMixin, db.Model):
         return '<Product "{}:{}">'.format(self.name, self.url)
 
     def set_photo(self, photo_url):
-        photo_file_name = hashlib.sha256(photo_url.encode('utf-8')).hexdigest() + '.jpeg'
+        photo_file_name = hashlib.sha256(photo_url.encode('utf-8')).hexdigest() + '.png'
         photo_path = os.path.join(self.BASE_PHOTO_PATH, photo_file_name)
 
         logging.debug('Loading product photo from {}'.format(photo_url))
